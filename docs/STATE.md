@@ -14,8 +14,8 @@
 
 ### Milestone Roadmap (from ARCHITECTURE.md)
 - [x] **Milestone 1**: Scaffold TanStack Start + TS + Tailwind v4 (Complete)
-- [ ] **Milestone 2**: Add Prisma + Supabase schema & seed boards (Queued / Next)
-- [ ] **Milestone 3**: Board list + thread list via route loaders (Queued)
+- [x] **Milestone 2**: Add Prisma + Supabase schema & seed boards (Complete)
+- [ ] **Milestone 3**: Board list + thread list via route loaders (Queued / Next)
 - [ ] **Milestone 4**: Create thread (server function + `router.invalidate`) (Queued)
 - [ ] **Milestone 5**: Reply functionality (server function + query invalidation) (Queued)
 - [ ] **Milestone 6**: Anonymous identity & deterministic name generation (Queued)
@@ -23,11 +23,12 @@
 - [ ] **Milestone 8**: Admin login + soft-delete moderation (Queued)
 - [ ] **Milestone 9**: Deploy to Vercel (Queued)
 
-### Active Milestone Task Breakdown (Milestone 1 Complete)
-- [x] `TASK-M1-01`: Initialize npm project with TanStack Start, React 19, and TypeScript (`#priority/p0`)
-- [x] `TASK-M1-02`: Configure Tailwind CSS v4 with semantic tokens from `DESIGN.md` in `src/styles/app.css` (`#priority/p0`)
-- [x] `TASK-M1-03`: Scaffold root layout (`src/routes/__root.tsx`) and app shell (`#priority/p1`)
-- [x] `TASK-M1-04`: Verify build (`npm run build`) and dev server (`npm run dev`) baseline (`#priority/p1`)
+### Milestone 2 Tasks (Complete)
+- [x] `TASK-M2-01`: Create `.env.example` with Supabase pooled & direct URL connection templates (`#priority/p0`)
+- [x] `TASK-M2-02`: Define Prisma schema with `Board`, `Thread`, `Post` models and composite indices (`#priority/p0`)
+- [x] `TASK-M2-03`: Implement `src/server/db.ts` serverless Prisma singleton (`#priority/p0`)
+- [x] `TASK-M2-04`: Scaffold `prisma/seed.ts` for default boards (`general`, `study`, `random`) (`#priority/p1`)
+- [x] `TASK-M2-05`: Run `prisma generate` and verify `typecheck` and `build` (`#priority/p0`)
 
 ---
 
