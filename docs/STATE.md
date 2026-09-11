@@ -2,11 +2,13 @@
 
 ## 1. Executive Summary & Current Position
 - **Project Name**: AnonBoard
-- **Current Milestone / Epic**: Milestone 3: Board list + thread list via route loaders
+- **Current Milestone / Epic**: Milestone 4: Create thread (server function + form UI)
 - **Overall Status**: ACTIVE <!-- Options: ACTIVE | PAUSED | STABILIZING | RELEASE_CANDIDATE -->
 - **Target Release / Deadline**: MVP
-- **Current Working Branch**: feat/m3-board-and-thread-lists
+- **Current Working Branch**: feat/m4-thread-creation
+- **Active Pull Request**: [#14 (feat/m4-thread-creation)](https://github.com/lowqualityloey/anonboard/pull/14)
 - **Last Updated**: 2026-09-11
+
 
 ---
 
@@ -16,17 +18,17 @@
 - [x] **Milestone 1**: Scaffold TanStack Start + TS + Tailwind v4 (Complete)
 - [x] **Milestone 2**: Add Prisma + Supabase schema & seed boards (Complete)
 - [x] **Milestone 3**: Board list + thread list via route loaders (Complete)
-- [ ] **Milestone 4**: Create thread (server function + `router.invalidate`) (Queued / Next)
-- [ ] **Milestone 5**: Reply functionality (server function + query invalidation) (Queued)
+- [x] **Milestone 4**: Create thread (server function + `router.invalidate`) (Complete)
+- [ ] **Milestone 5**: Reply functionality (server function + query invalidation) (Queued / Next)
 - [ ] **Milestone 6**: Anonymous identity & deterministic name generation (Queued)
 - [ ] **Milestone 7**: Polling with TanStack Query (12s interval) (Queued)
 - [ ] **Milestone 8**: Admin login + soft-delete moderation (Queued)
 - [ ] **Milestone 9**: Deploy to Vercel (Queued)
 
-### Milestone 3 Tasks (Complete)
-- [x] `TASK-M3-01`: Board & thread query layer in `src/server/queries/` with `createServerFn` (#1) (`#priority/p0`)
-- [x] `TASK-M3-02`: Index page (`/`) board directory with semantic cards & thread counts (#2) (`#priority/p0`)
-- [x] `TASK-M3-03`: Board thread list page (`/b/$slug`) with `ThreadRow` component and notFound handler (#3) (`#priority/p0`)
+### Milestone 4 Tasks (Complete)
+- [x] `TASK-M4-01`: Thread creation server function & Zod schema (#4) (`#priority/p0`)
+- [x] `TASK-M4-02`: New thread form UI with client validation & navigation (#5) (`#priority/p1`)
+
 
 ---
 
