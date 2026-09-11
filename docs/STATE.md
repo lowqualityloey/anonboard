@@ -2,11 +2,13 @@
 
 ## 1. Executive Summary & Current Position
 - **Project Name**: AnonBoard
-- **Current Milestone / Epic**: Complete (All Milestones 1–9 Shipped)
-- **Overall Status**: RELEASE_CANDIDATE <!-- Options: ACTIVE | PAUSED | STABILIZING | RELEASE_CANDIDATE -->
-- **Target Release / Deadline**: MVP (Shipped)
+- **Current Milestone / Epic**: Complete (All Milestones 1–9 Shipped & Verified)
+- **Overall Status**: SHIPPED <!-- Options: ACTIVE | PAUSED | STABILIZING | RELEASE_CANDIDATE | SHIPPED -->
+- **Target Release / Deadline**: MVP (Live in Production)
+- **Live Production URL**: [https://anonboard-tau.vercel.app](https://anonboard-tau.vercel.app)
 - **Current Working Branch**: main
-- **Last Updated**: 2026-09-11
+- **Last Updated**: 2026-09-12
+
 
 
 
