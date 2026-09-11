@@ -192,4 +192,4 @@ anonboard/
 
 ## License
 
-MIT
+This project is licensed under the [MIT License](./LICENSE) © 2026 Jonell Balanay.
