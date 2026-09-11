@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { prisma } from "~/server/db";
 import { createPostSchema } from "~/lib/validation";
+import { getOrCreateAnonId, generateAnonName } from "~/server/anon";
 
 export const createPostFn = createServerFn({ method: "POST" })
   .validator((data: unknown) => createPostSchema.parse(data))
@@ -19,9 +20,9 @@ export const createPostFn = createServerFn({ method: "POST" })
       throw new Error("Thread is locked for new replies");
     }
 
-    // Temporary anonymous name generator until Milestone 6 deterministic session cookies
-    const randomSuffix = Math.random().toString(36).substring(2, 6);
-    const anonName = `Anon ${randomSuffix}`;
+    // Resolve anonymous identity & deterministic tag for this thread
+    const anonId = await getOrCreateAnonId();
+    const anonName = generateAnonName(anonId, data.threadId);
 
     // Execute in transaction to insert post and bump thread updatedAt
     const [post] = await prisma.$transaction([
