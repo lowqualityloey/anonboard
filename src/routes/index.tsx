@@ -54,7 +54,7 @@ function HomePage() {
                 key={board.id}
                 to="/b/$slug"
                 params={{ slug: board.slug }}
-                className="group flex flex-col justify-between rounded-lg border border-border bg-surface p-5 transition-colors duration-fast hover:border-border-hover"
+                className="group flex flex-col justify-between rounded-lg border border-border bg-surface p-5 transition-all duration-base hover:border-border-hover hover:-translate-y-1 hover:shadow-md active:translate-y-0 active:scale-[0.98]"
               >
                 <div>
                   <div className="flex items-center justify-between">
