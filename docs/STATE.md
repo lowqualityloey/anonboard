@@ -6,7 +6,9 @@
 - **Overall Status**: ACTIVE <!-- Options: ACTIVE | PAUSED | STABILIZING | RELEASE_CANDIDATE -->
 - **Target Release / Deadline**: MVP
 - **Current Working Branch**: feat/m7-live-polling
+- **Active Pull Request**: [#17 (feat/m7-live-polling)](https://github.com/lowqualityloey/anonboard/pull/17)
 - **Last Updated**: 2026-09-11
+
 
 ---
 
