@@ -1,13 +1,15 @@
 import { createServerFn } from "@tanstack/react-start";
 import { prisma } from "~/server/db";
 import { createThreadSchema } from "~/lib/validation";
+import { getOrCreateAnonId, generateAnonName } from "~/server/anon";
 
 export const createThreadFn = createServerFn({ method: "POST" })
   .validator((data: unknown) => createThreadSchema.parse(data))
   .handler(async ({ data }) => {
-    // Generate a temporary anonymous display name until Milestone 6 cookie hashing
-    const randomSuffix = Math.random().toString(36).substring(2, 6);
-    const anonName = `Anon ${randomSuffix}`;
+    // Resolve anonymous identity & deterministic tag for OP
+    const anonId = await getOrCreateAnonId();
+    // For a new thread, we derive the tag deterministically using the user ID and board + title timestamp seed
+    const anonName = generateAnonName(anonId, `${data.boardId}:${data.title}`);
 
     const thread = await prisma.thread.create({
       data: {

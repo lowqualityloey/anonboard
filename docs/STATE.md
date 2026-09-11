@@ -2,11 +2,11 @@
 
 ## 1. Executive Summary & Current Position
 - **Project Name**: AnonBoard
-- **Current Milestone / Epic**: Milestone 5: Reply functionality (server function + thread detail UI)
+- **Current Milestone / Epic**: Milestone 6: Anonymous identity & deterministic name generation
 - **Overall Status**: ACTIVE <!-- Options: ACTIVE | PAUSED | STABILIZING | RELEASE_CANDIDATE -->
 - **Target Release / Deadline**: MVP
-- **Current Working Branch**: feat/m5-thread-detail-and-replies
-- **Active Pull Request**: [#15 (feat/m5-thread-detail-and-replies)](https://github.com/lowqualityloey/anonboard/pull/15)
+- **Current Working Branch**: feat/m6-anonymous-identity
+- **Active Pull Request**: [#16 (feat/m6-anonymous-identity)](https://github.com/lowqualityloey/anonboard/pull/16)
 - **Last Updated**: 2026-09-11
 
 
@@ -20,14 +20,14 @@
 - [x] **Milestone 3**: Board list + thread list via route loaders (Complete)
 - [x] **Milestone 4**: Create thread (server function + `router.invalidate`) (Complete)
 - [x] **Milestone 5**: Reply functionality (server function + query invalidation) (Complete)
-- [ ] **Milestone 6**: Anonymous identity & deterministic name generation (Queued / Next)
-- [ ] **Milestone 7**: Polling with TanStack Query (12s interval) (Queued)
+- [x] **Milestone 6**: Anonymous identity & deterministic name generation (Complete)
+- [ ] **Milestone 7**: Polling with TanStack Query (12s interval) (Queued / Next)
 - [ ] **Milestone 8**: Admin login + soft-delete moderation (Queued)
 - [ ] **Milestone 9**: Deploy to Vercel (Queued)
 
-### Milestone 5 Tasks (Complete)
-- [x] `TASK-M5-01`: Thread detail query & route (`/t/$id`) with PostCard (#6) (`#priority/p0`)
-- [x] `TASK-M5-02`: Reply mutation (`createPost`) & ReplyForm component (#7) (`#priority/p0`)
+### Milestone 6 Tasks (Complete)
+- [x] `TASK-M6-01`: Anonymous cookie session & thread tag generator (`src/server/anon.ts`) (#8) (`#priority/p0`)
+
 
 
 
