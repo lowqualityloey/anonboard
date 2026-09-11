@@ -1,0 +1,8 @@
+node_modules/
+.vinxi/
+.output/
+dist/
+.env
+.env.local
+routeTree.gen.ts
+app.config.timestamp_*.js
