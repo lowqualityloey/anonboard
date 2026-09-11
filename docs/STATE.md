@@ -6,7 +6,9 @@
 - **Overall Status**: ACTIVE <!-- Options: ACTIVE | PAUSED | STABILIZING | RELEASE_CANDIDATE -->
 - **Target Release / Deadline**: MVP
 - **Current Working Branch**: feat/m5-thread-detail-and-replies
+- **Active Pull Request**: [#15 (feat/m5-thread-detail-and-replies)](https://github.com/lowqualityloey/anonboard/pull/15)
 - **Last Updated**: 2026-09-11
+
 
 ---
 
