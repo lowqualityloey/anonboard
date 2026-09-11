@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
 import { createPostFn } from "~/server/fns/createPost";
 import { createPostSchema } from "~/lib/validation";
 
@@ -10,6 +11,7 @@ interface ReplyFormProps {
 
 export function ReplyForm({ threadId, isLocked }: ReplyFormProps) {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [body, setBody] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -42,7 +44,8 @@ export function ReplyForm({ threadId, isLocked }: ReplyFormProps) {
       });
 
       setBody("");
-      // Invalidate router loader cache to re-fetch thread and replies immediately
+      // Invalidate both Query cache and router loader cache for immediate synchronization
+      await queryClient.invalidateQueries({ queryKey: ["thread", threadId] });
       await router.invalidate();
     } catch (err: unknown) {
       const message =

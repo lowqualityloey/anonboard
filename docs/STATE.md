@@ -2,13 +2,11 @@
 
 ## 1. Executive Summary & Current Position
 - **Project Name**: AnonBoard
-- **Current Milestone / Epic**: Milestone 6: Anonymous identity & deterministic name generation
+- **Current Milestone / Epic**: Milestone 7: Live polling with TanStack Query (12s interval)
 - **Overall Status**: ACTIVE <!-- Options: ACTIVE | PAUSED | STABILIZING | RELEASE_CANDIDATE -->
 - **Target Release / Deadline**: MVP
-- **Current Working Branch**: feat/m6-anonymous-identity
-- **Active Pull Request**: [#16 (feat/m6-anonymous-identity)](https://github.com/lowqualityloey/anonboard/pull/16)
+- **Current Working Branch**: feat/m7-live-polling
 - **Last Updated**: 2026-09-11
-
 
 ---
 
@@ -21,12 +19,13 @@
 - [x] **Milestone 4**: Create thread (server function + `router.invalidate`) (Complete)
 - [x] **Milestone 5**: Reply functionality (server function + query invalidation) (Complete)
 - [x] **Milestone 6**: Anonymous identity & deterministic name generation (Complete)
-- [ ] **Milestone 7**: Polling with TanStack Query (12s interval) (Queued / Next)
-- [ ] **Milestone 8**: Admin login + soft-delete moderation (Queued)
+- [x] **Milestone 7**: Polling with TanStack Query (12s interval) (Complete)
+- [ ] **Milestone 8**: Admin login + soft-delete moderation (Queued / Next)
 - [ ] **Milestone 9**: Deploy to Vercel (Queued)
 
-### Milestone 6 Tasks (Complete)
-- [x] `TASK-M6-01`: Anonymous cookie session & thread tag generator (`src/server/anon.ts`) (#8) (`#priority/p0`)
+### Milestone 7 Tasks (Complete)
+- [x] `TASK-M7-01`: 12-second polling loop on `/t/$id` with TanStack Query & `pollThreadFn` (#9) (`#priority/p1`)
+
 
 
 

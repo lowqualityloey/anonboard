@@ -1,5 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { getThreadByIdFn } from "~/server/queries/threads";
+import { pollThreadFn } from "~/server/fns/pollThread";
 import { PostCard } from "~/components/PostCard";
 import { ReplyForm } from "~/components/ReplyForm";
 
@@ -30,6 +32,17 @@ export const Route = createFileRoute("/t/$id")({
 
 function ThreadDetailPage() {
   const { thread } = Route.useLoaderData();
+
+  // Milestone 7: Live polling every 12 seconds with TanStack Query
+  // Automatically pauses when browser tab is inactive/hidden (refetchIntervalInBackground: false)
+  const { data: posts = thread.posts } = useQuery({
+    queryKey: ["thread", thread.id],
+    queryFn: () => pollThreadFn({ data: thread.id }),
+    initialData: thread.posts,
+    refetchInterval: 12_000,
+    refetchIntervalInBackground: false,
+    refetchOnWindowFocus: true,
+  });
 
   const formattedCreated = new Intl.DateTimeFormat("en-US", {
     month: "short",
@@ -90,21 +103,28 @@ function ThreadDetailPage() {
         </p>
       </article>
 
-      {/* Replies Section */}
+      {/* Replies Section with Live Polling */}
       <section className="mb-8">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-text-muted">
-            Replies ({thread.posts.length})
-          </h2>
+          <div className="flex items-center space-x-2">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-text-muted">
+              Replies ({posts.length})
+            </h2>
+            <span
+              className="inline-block h-2 w-2 rounded-full bg-accent animate-pulse"
+              title="Live 12-second polling active"
+            />
+          </div>
+          <span className="text-[11px] text-text-muted">Auto-updating</span>
         </div>
 
-        {thread.posts.length === 0 ? (
+        {posts.length === 0 ? (
           <div className="rounded-lg border border-dashed border-border p-8 text-center text-xs text-text-muted">
             No replies yet. Be the first to share your thoughts anonymously!
           </div>
         ) : (
           <div className="space-y-3">
-            {thread.posts.map((post, idx) => (
+            {posts.map((post, idx) => (
               <PostCard key={post.id} post={post} index={idx} />
             ))}
           </div>
