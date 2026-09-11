@@ -6,7 +6,9 @@
 - **Overall Status**: ACTIVE <!-- Options: ACTIVE | PAUSED | STABILIZING | RELEASE_CANDIDATE -->
 - **Target Release / Deadline**: MVP
 - **Current Working Branch**: feat/m4-thread-creation
+- **Active Pull Request**: [#14 (feat/m4-thread-creation)](https://github.com/lowqualityloey/anonboard/pull/14)
 - **Last Updated**: 2026-09-11
+
 
 ---
 
