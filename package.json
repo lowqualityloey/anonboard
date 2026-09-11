@@ -9,10 +9,12 @@
     "preview": "vite preview",
     "start": "node .output/server/index.mjs",
     "typecheck": "tsc --noEmit",
+    "postinstall": "prisma generate",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",
     "db:seed": "prisma db seed"
+
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

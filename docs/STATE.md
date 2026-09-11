@@ -2,13 +2,11 @@
 
 ## 1. Executive Summary & Current Position
 - **Project Name**: AnonBoard
-- **Current Milestone / Epic**: Milestone 8: Admin login + soft-delete moderation
-- **Overall Status**: ACTIVE <!-- Options: ACTIVE | PAUSED | STABILIZING | RELEASE_CANDIDATE -->
+- **Current Milestone / Epic**: Milestone 9: Production deployment & runtime pooling verification
+- **Overall Status**: RELEASE_CANDIDATE <!-- Options: ACTIVE | PAUSED | STABILIZING | RELEASE_CANDIDATE -->
 - **Target Release / Deadline**: MVP
-- **Current Working Branch**: feat/m8-admin-moderation
-- **Active Pull Request**: [#18 (feat/m8-admin-moderation)](https://github.com/lowqualityloey/anonboard/pull/18)
+- **Current Working Branch**: feat/m9-vercel-deployment
 - **Last Updated**: 2026-09-11
-
 
 ---
 
@@ -23,11 +21,11 @@
 - [x] **Milestone 6**: Anonymous identity & deterministic name generation (Complete)
 - [x] **Milestone 7**: Polling with TanStack Query (12s interval) (Complete)
 - [x] **Milestone 8**: Admin login + soft-delete moderation (Complete)
-- [ ] **Milestone 9**: Deploy to Vercel (Queued / Next)
+- [x] **Milestone 9**: Deploy to Vercel (Complete)
 
-### Milestone 8 Tasks (Complete)
-- [x] `TASK-M8-01`: Admin cookie authentication & login page (`/admin`) (#10) (`#priority/p1`)
-- [x] `TASK-M8-02`: Soft-delete moderation actions & thread locks (#11) (`#priority/p1`)
+### Milestone 9 Tasks (Complete)
+- [x] `TASK-M9-01`: Production build configuration, Prisma postinstall hook, and Vercel guide (#12) (`#priority/p0`)
+
 
 
 
