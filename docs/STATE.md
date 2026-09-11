@@ -6,7 +6,9 @@
 - **Overall Status**: ACTIVE <!-- Options: ACTIVE | PAUSED | STABILIZING | RELEASE_CANDIDATE -->
 - **Target Release / Deadline**: MVP
 - **Current Working Branch**: feat/m8-admin-moderation
+- **Active Pull Request**: [#18 (feat/m8-admin-moderation)](https://github.com/lowqualityloey/anonboard/pull/18)
 - **Last Updated**: 2026-09-11
+
 
 ---
 
