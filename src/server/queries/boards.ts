@@ -1,7 +1,15 @@
 import { createServerFn } from "@tanstack/react-start";
 import { prisma } from "~/server/db";
 
-export async function getBoards() {
+type BoardsResult = Awaited<ReturnType<typeof fetchBoardsFromDb>>;
+
+const BOARDS_CACHE_TTL_MS = 60_000; // 60 seconds
+
+let cachedBoards: BoardsResult | null = null;
+let cachedBoardsTimestamp = 0;
+let inflightBoardsPromise: Promise<BoardsResult> | null = null;
+
+async function fetchBoardsFromDb() {
   return prisma.board.findMany({
     orderBy: { createdAt: "asc" },
     include: {
@@ -14,6 +22,41 @@ export async function getBoards() {
       },
     },
   });
+}
+
+/**
+ * Invalidates the in-memory boards cache.
+ * Call this after mutations that change board metadata or thread counts.
+ */
+export function invalidateBoardsCache() {
+  cachedBoards = null;
+  cachedBoardsTimestamp = 0;
+  inflightBoardsPromise = null;
+}
+
+export async function getBoards() {
+  const now = Date.now();
+  if (cachedBoards && now - cachedBoardsTimestamp < BOARDS_CACHE_TTL_MS) {
+    return cachedBoards;
+  }
+
+  if (inflightBoardsPromise) {
+    return inflightBoardsPromise;
+  }
+
+  inflightBoardsPromise = fetchBoardsFromDb()
+    .then((data) => {
+      cachedBoards = data;
+      cachedBoardsTimestamp = Date.now();
+      inflightBoardsPromise = null;
+      return data;
+    })
+    .catch((err) => {
+      inflightBoardsPromise = null;
+      throw err;
+    });
+
+  return inflightBoardsPromise;
 }
 
 export async function getBoardBySlug(slug: string) {
