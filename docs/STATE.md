@@ -6,7 +6,9 @@
 - **Overall Status**: ACTIVE <!-- Options: ACTIVE | PAUSED | STABILIZING | RELEASE_CANDIDATE -->
 - **Target Release / Deadline**: MVP
 - **Current Working Branch**: feat/m6-anonymous-identity
+- **Active Pull Request**: [#16 (feat/m6-anonymous-identity)](https://github.com/lowqualityloey/anonboard/pull/16)
 - **Last Updated**: 2026-09-11
+
 
 ---
 
