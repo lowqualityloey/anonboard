@@ -1,5 +1,14 @@
 # AnonBoard
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-anonboard--tau.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://anonboard-tau.vercel.app)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](./LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![TanStack Start](https://img.shields.io/badge/TanStack_Start-1.168-FF4154?style=for-the-badge&logo=react&logoColor=white)](https://tanstack.com/start)
+[![React 19](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![Supabase](https://img.shields.io/badge/Supabase-Postgres-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
+
 A high-performance, lightweight anonymous discussion board. Users browse boards, create threads, and participate in discussions without creating an account.
 
 - **Live Demo**: [https://anonboard-tau.vercel.app](https://anonboard-tau.vercel.app)
