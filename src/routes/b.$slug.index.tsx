@@ -61,7 +61,7 @@ function BoardThreadsPage() {
           <Link
             to="/b/$slug/new"
             params={{ slug: board.slug }}
-            className="inline-flex items-center rounded-md bg-accent px-4 py-2 text-sm font-medium text-bg transition-colors duration-fast hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="inline-flex items-center rounded-md bg-accent px-4 py-2 text-sm font-medium text-bg transition-all duration-fast hover:bg-accent-hover hover:shadow-sm active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             + New Thread
           </Link>

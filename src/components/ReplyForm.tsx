@@ -89,7 +89,7 @@ export function ReplyForm({ threadId, isLocked }: ReplyFormProps) {
           <button
             type="submit"
             disabled={isSubmitting || body.trim().length < 2 || body.length > 2000}
-            className="inline-flex items-center gap-2 rounded-md bg-accent px-4 py-1.5 text-xs font-semibold text-bg hover:bg-accent-hover transition-colors duration-fast disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
+            className="inline-flex items-center gap-2 rounded-md bg-accent px-4 py-1.5 text-xs font-semibold text-bg hover:bg-accent-hover transition-all duration-fast hover:shadow-sm active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
           >
             {isSubmitting && (
               <svg className="h-3 w-3 animate-spin" viewBox="0 0 24 24" fill="none">
