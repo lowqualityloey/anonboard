@@ -1,35 +1,78 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { getBoardsFn } from "~/server/queries/boards";
 
 export const Route = createFileRoute("/")({
-  component: HomeComponent,
+  loader: async () => {
+    return getBoardsFn();
+  },
+  component: HomePage,
 });
 
-function HomeComponent() {
+function HomePage() {
+  const boards = Route.useLoaderData();
+
   return (
-    <main className="mx-auto max-w-3xl px-4 py-8">
-      <header className="mb-8 border-b border-border pb-4">
-        <h1 className="text-2xl font-semibold tracking-tight text-text">
+    <div className="mx-auto max-w-4xl px-4 py-8">
+      <header className="mb-8 border-b border-border pb-6">
+        <h1 className="text-3xl font-bold tracking-tight text-text">
           AnonBoard
         </h1>
-        <p className="mt-1 text-sm text-text-muted">
-          Anonymous, ephemeral, and lightweight discussion boards.
+        <p className="mt-2 text-sm text-text-muted">
+          Anonymous, lightweight discussion boards. Select a board below to browse threads or start a conversation.
         </p>
       </header>
 
-      <div className="rounded-lg border border-border bg-surface p-6 shadow-sm">
-        <h2 className="text-lg font-medium text-text">Welcome to AnonBoard</h2>
-        <p className="mt-2 text-sm text-text-muted">
-          Milestone 1 foundation active: TanStack Start + React 19 + Tailwind CSS v4.
-        </p>
-        <div className="mt-4 flex items-center gap-3">
-          <span className="inline-flex items-center rounded-sm bg-surface px-2.5 py-1 text-xs font-medium text-accent border border-border">
-            System Online
-          </span>
+      <section>
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-text-muted">
+            Boards
+          </h2>
           <span className="text-xs text-text-muted">
-            Ready for Milestone 2 (Prisma + Supabase schema).
+            {boards.length} available
           </span>
         </div>
-      </div>
-    </main>
+
+        {boards.length === 0 ? (
+          <div className="rounded-lg border border-border bg-surface p-8 text-center text-text-muted">
+            <p>No boards found. Run database seed to populate default boards.</p>
+          </div>
+        ) : (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {boards.map((board) => (
+              <Link
+                key={board.id}
+                to="/b/$slug"
+                params={{ slug: board.slug }}
+                className="group flex flex-col justify-between rounded-lg border border-border bg-surface p-5 transition-colors duration-fast hover:border-border-hover"
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold text-text group-hover:text-accent">
+                      /b/{board.slug}
+                    </h3>
+                    <span className="rounded-sm bg-bg px-2 py-0.5 text-xs text-text-muted border border-border">
+                      {board._count.threads}{" "}
+                      {board._count.threads === 1 ? "thread" : "threads"}
+                    </span>
+                  </div>
+                  <h4 className="mt-1 text-sm font-medium text-text">
+                    {board.name}
+                  </h4>
+                  {board.description && (
+                    <p className="mt-2 text-xs leading-relaxed text-text-muted line-clamp-2">
+                      {board.description}
+                    </p>
+                  )}
+                </div>
+
+                <div className="mt-4 flex items-center text-xs font-medium text-accent">
+                  Browse board &rarr;
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
+      </section>
+    </div>
   );
 }

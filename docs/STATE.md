@@ -2,10 +2,10 @@
 
 ## 1. Executive Summary & Current Position
 - **Project Name**: AnonBoard
-- **Current Milestone / Epic**: Milestone 1: Scaffold TanStack Start + TS + Tailwind v4
+- **Current Milestone / Epic**: Milestone 3: Board list + thread list via route loaders
 - **Overall Status**: ACTIVE <!-- Options: ACTIVE | PAUSED | STABILIZING | RELEASE_CANDIDATE -->
 - **Target Release / Deadline**: MVP
-- **Current Working Branch**: main
+- **Current Working Branch**: feat/m3-board-and-thread-lists
 - **Last Updated**: 2026-09-11
 
 ---
@@ -15,20 +15,18 @@
 ### Milestone Roadmap (from ARCHITECTURE.md)
 - [x] **Milestone 1**: Scaffold TanStack Start + TS + Tailwind v4 (Complete)
 - [x] **Milestone 2**: Add Prisma + Supabase schema & seed boards (Complete)
-- [ ] **Milestone 3**: Board list + thread list via route loaders (Queued / Next)
-- [ ] **Milestone 4**: Create thread (server function + `router.invalidate`) (Queued)
+- [x] **Milestone 3**: Board list + thread list via route loaders (Complete)
+- [ ] **Milestone 4**: Create thread (server function + `router.invalidate`) (Queued / Next)
 - [ ] **Milestone 5**: Reply functionality (server function + query invalidation) (Queued)
 - [ ] **Milestone 6**: Anonymous identity & deterministic name generation (Queued)
 - [ ] **Milestone 7**: Polling with TanStack Query (12s interval) (Queued)
 - [ ] **Milestone 8**: Admin login + soft-delete moderation (Queued)
 - [ ] **Milestone 9**: Deploy to Vercel (Queued)
 
-### Milestone 2 Tasks (Complete)
-- [x] `TASK-M2-01`: Create `.env.example` with Supabase pooled & direct URL connection templates (`#priority/p0`)
-- [x] `TASK-M2-02`: Define Prisma schema with `Board`, `Thread`, `Post` models and composite indices (`#priority/p0`)
-- [x] `TASK-M2-03`: Implement `src/server/db.ts` serverless Prisma singleton (`#priority/p0`)
-- [x] `TASK-M2-04`: Scaffold `prisma/seed.ts` for default boards (`general`, `study`, `random`) (`#priority/p1`)
-- [x] `TASK-M2-05`: Run `prisma generate` and verify `typecheck` and `build` (`#priority/p0`)
+### Milestone 3 Tasks (Complete)
+- [x] `TASK-M3-01`: Board & thread query layer in `src/server/queries/` with `createServerFn` (#1) (`#priority/p0`)
+- [x] `TASK-M3-02`: Index page (`/`) board directory with semantic cards & thread counts (#2) (`#priority/p0`)
+- [x] `TASK-M3-03`: Board thread list page (`/b/$slug`) with `ThreadRow` component and notFound handler (#3) (`#priority/p0`)
 
 ---
 
