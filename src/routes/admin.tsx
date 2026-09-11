@@ -225,9 +225,7 @@ function AdminDashboardPage() {
             <tbody className="divide-y divide-border">
               {data.threads.map((thread) => {
                 const effectiveLocked =
-                  optimisticLocks[thread.id] !== undefined
-                    ? optimisticLocks[thread.id]
-                    : thread.isLocked;
+                  optimisticLocks[thread.id] ?? thread.isLocked;
                 const isLocking = actionInProgress === `lock-${thread.id}`;
                 const isDeleting = actionInProgress === `delete-thread-${thread.id}`;
 

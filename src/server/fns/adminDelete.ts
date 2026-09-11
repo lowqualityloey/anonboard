@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { prisma } from "~/server/db";
 import { isAuthenticatedAdmin } from "~/server/auth";
+import { invalidateBoardsCache } from "~/server/queries/boards";
 
 const deleteThreadSchema = z.object({
   threadId: z.string().min(1, "Thread ID is required"),
@@ -27,6 +28,8 @@ export const adminSoftDeleteThreadFn = createServerFn({ method: "POST" })
       where: { id: data.threadId },
       data: { isDeleted: true },
     });
+
+    invalidateBoardsCache();
 
     return thread;
   });

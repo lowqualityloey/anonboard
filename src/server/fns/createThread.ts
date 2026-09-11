@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { prisma } from "~/server/db";
 import { createThreadSchema } from "~/lib/validation";
 import { getOrCreateAnonId, generateAnonName } from "~/server/anon";
+import { invalidateBoardsCache } from "~/server/queries/boards";
 
 export const createThreadFn = createServerFn({ method: "POST" })
   .validator((data: unknown) => createThreadSchema.parse(data))
@@ -23,6 +24,8 @@ export const createThreadFn = createServerFn({ method: "POST" })
         boardId: true,
       },
     });
+
+    invalidateBoardsCache();
 
     return thread;
   });
