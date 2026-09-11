@@ -56,15 +56,12 @@ function NewThreadPage() {
     });
 
     if (!validationResult.success) {
-      const fieldErrors: { title?: string; body?: string } = {};
-      for (const issue of validationResult.error.issues) {
-        if (issue.path[0] === "title" && !fieldErrors.title) {
-          fieldErrors.title = issue.message;
-        } else if (issue.path[0] === "body" && !fieldErrors.body) {
-          fieldErrors.body = issue.message;
-        }
-      }
-      setErrors(fieldErrors);
+      const { title: titleErrors, body: bodyErrors } =
+        validationResult.error.flatten().fieldErrors;
+      setErrors({
+        title: titleErrors?.[0],
+        body: bodyErrors?.[0],
+      });
       return;
     }
 
