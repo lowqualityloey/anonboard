@@ -6,7 +6,9 @@
 - **Overall Status**: RELEASE_CANDIDATE <!-- Options: ACTIVE | PAUSED | STABILIZING | RELEASE_CANDIDATE -->
 - **Target Release / Deadline**: MVP
 - **Current Working Branch**: feat/m9-vercel-deployment
+- **Active Pull Request**: [#19 (feat/m9-vercel-deployment)](https://github.com/lowqualityloey/anonboard/pull/19)
 - **Last Updated**: 2026-09-11
+
 
 ---
 
