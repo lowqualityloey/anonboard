@@ -7,7 +7,7 @@
 - **Target Release / Deadline**: MVP (Live in Production)
 - **Live Production URL**: [https://anonboard-tau.vercel.app](https://anonboard-tau.vercel.app)
 - **Current Working Branch**: main
-- **Last Updated**: 2026-09-12
+- **Last Updated**: 2026-09-12 (Optimizations Deployed)
 
 
 
@@ -76,13 +76,13 @@
 | :--- | :--- | :--- | :--- |
 | 2026-09-11 | Technology Stack Selection | Adopted TanStack Start, React 19, Tailwind v4, Prisma, Supabase Postgres | [`ARCHITECTURE.md`](file:///c:/Users/jonel/Projects/anonboard/ARCHITECTURE.md) |
 | 2026-09-11 | Design System & Token Architecture | Adopted Tailwind v4 `@theme` with semantic surface/accent/danger tokens | [`DESIGN.md`](file:///c:/Users/jonel/Projects/anonboard/DESIGN.md) |
+| 2026-09-12 | Latency & Interaction Optimization | Configured `syd1` serverless function region in `vercel.json`, enabled router intent preloading, and added instant button feedback | PR d839cdf |
 
 ---
 
 ## 7. Next Immediate Actions (Queued)
-1. Trigger `pk:plan` to spec out the Milestone 1 scaffolding steps for TanStack Start + TS + Tailwind v4.
-2. Execute Milestone 1 scaffolding tasks (`TASK-M1-01` through `TASK-M1-04`).
-3. Verify dev server and build outputs.
+1. Verify user experience and latency on production (`https://anonboard-tau.vercel.app`).
+2. Monitor Vercel function invocation duration and database pooler health.
 
 ---
 
@@ -90,3 +90,4 @@
 | Date | Engineer / Agent | Milestone / Focus | Key Changes & Artifacts |
 | :--- | :--- | :--- | :--- |
 | 2026-09-11 | Antigravity (pk:onboard) | Brownfield Codebase Intake | Audited repo architecture, generated PROMPTKIT.md, and initialized docs/STATE.md |
+| 2026-09-12 | Antigravity (pk:perf) | Latency & UX Optimizations | Deployed `syd1` region configuration, TanStack router intent preloading, and active button spinner feedback |
