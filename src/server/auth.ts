@@ -4,17 +4,21 @@ import { getCookie, setCookie, deleteCookie } from "@tanstack/react-start/server
 const ADMIN_COOKIE_NAME = "anonboard_admin_session";
 const SESSION_TTL = 7 * 24 * 60 * 60; // 7 days
 
-function getSessionSecret(): string {
-  return process.env.SESSION_SECRET || "anonboard-fallback-secret-development-only";
+export function getSessionSecret(): string {
+  const secret = process.env.SESSION_SECRET;
+  if (!secret) {
+    throw new Error("SESSION_SECRET environment variable is not configured.");
+  }
+  return secret;
 }
 
-function signSession(data: string): string {
+export function signSession(data: string): string {
   const secret = getSessionSecret();
   const signature = createHmac("sha256", secret).update(data).digest("hex");
   return `${data}.${signature}`;
 }
 
-function verifySignature(signedValue: string): boolean {
+export function verifySignature(signedValue: string): boolean {
   const lastDot = signedValue.lastIndexOf(".");
   if (lastDot === -1) return false;
 
