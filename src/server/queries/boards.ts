@@ -27,3 +27,10 @@ export const getBoardsFn = createServerFn({ method: "GET" }).handler(
     return getBoards();
   }
 );
+
+export const getBoardBySlugFn = createServerFn({ method: "GET" })
+  .validator((slug: string) => slug)
+  .handler(async ({ data: slug }) => {
+    return getBoardBySlug(slug);
+  });
+
