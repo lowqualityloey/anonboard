@@ -2,13 +2,11 @@
 
 ## 1. Executive Summary & Current Position
 - **Project Name**: AnonBoard
-- **Current Milestone / Epic**: Milestone 7: Live polling with TanStack Query (12s interval)
+- **Current Milestone / Epic**: Milestone 8: Admin login + soft-delete moderation
 - **Overall Status**: ACTIVE <!-- Options: ACTIVE | PAUSED | STABILIZING | RELEASE_CANDIDATE -->
 - **Target Release / Deadline**: MVP
-- **Current Working Branch**: feat/m7-live-polling
-- **Active Pull Request**: [#17 (feat/m7-live-polling)](https://github.com/lowqualityloey/anonboard/pull/17)
+- **Current Working Branch**: feat/m8-admin-moderation
 - **Last Updated**: 2026-09-11
-
 
 ---
 
@@ -22,11 +20,13 @@
 - [x] **Milestone 5**: Reply functionality (server function + query invalidation) (Complete)
 - [x] **Milestone 6**: Anonymous identity & deterministic name generation (Complete)
 - [x] **Milestone 7**: Polling with TanStack Query (12s interval) (Complete)
-- [ ] **Milestone 8**: Admin login + soft-delete moderation (Queued / Next)
-- [ ] **Milestone 9**: Deploy to Vercel (Queued)
+- [x] **Milestone 8**: Admin login + soft-delete moderation (Complete)
+- [ ] **Milestone 9**: Deploy to Vercel (Queued / Next)
 
-### Milestone 7 Tasks (Complete)
-- [x] `TASK-M7-01`: 12-second polling loop on `/t/$id` with TanStack Query & `pollThreadFn` (#9) (`#priority/p1`)
+### Milestone 8 Tasks (Complete)
+- [x] `TASK-M8-01`: Admin cookie authentication & login page (`/admin`) (#10) (`#priority/p1`)
+- [x] `TASK-M8-02`: Soft-delete moderation actions & thread locks (#11) (`#priority/p1`)
+
 
 
 
