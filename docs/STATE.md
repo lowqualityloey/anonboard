@@ -2,11 +2,11 @@
 
 ## 1. Executive Summary & Current Position
 - **Project Name**: AnonBoard
-- **Current Milestone / Epic**: Milestone 4: Create thread (server function + form UI)
+- **Current Milestone / Epic**: Milestone 5: Reply functionality (server function + thread detail UI)
 - **Overall Status**: ACTIVE <!-- Options: ACTIVE | PAUSED | STABILIZING | RELEASE_CANDIDATE -->
 - **Target Release / Deadline**: MVP
-- **Current Working Branch**: feat/m4-thread-creation
-- **Active Pull Request**: [#14 (feat/m4-thread-creation)](https://github.com/lowqualityloey/anonboard/pull/14)
+- **Current Working Branch**: feat/m5-thread-detail-and-replies
+- **Active Pull Request**: [#15 (feat/m5-thread-detail-and-replies)](https://github.com/lowqualityloey/anonboard/pull/15)
 - **Last Updated**: 2026-09-11
 
 
@@ -19,15 +19,16 @@
 - [x] **Milestone 2**: Add Prisma + Supabase schema & seed boards (Complete)
 - [x] **Milestone 3**: Board list + thread list via route loaders (Complete)
 - [x] **Milestone 4**: Create thread (server function + `router.invalidate`) (Complete)
-- [ ] **Milestone 5**: Reply functionality (server function + query invalidation) (Queued / Next)
-- [ ] **Milestone 6**: Anonymous identity & deterministic name generation (Queued)
+- [x] **Milestone 5**: Reply functionality (server function + query invalidation) (Complete)
+- [ ] **Milestone 6**: Anonymous identity & deterministic name generation (Queued / Next)
 - [ ] **Milestone 7**: Polling with TanStack Query (12s interval) (Queued)
 - [ ] **Milestone 8**: Admin login + soft-delete moderation (Queued)
 - [ ] **Milestone 9**: Deploy to Vercel (Queued)
 
-### Milestone 4 Tasks (Complete)
-- [x] `TASK-M4-01`: Thread creation server function & Zod schema (#4) (`#priority/p0`)
-- [x] `TASK-M4-02`: New thread form UI with client validation & navigation (#5) (`#priority/p1`)
+### Milestone 5 Tasks (Complete)
+- [x] `TASK-M5-01`: Thread detail query & route (`/t/$id`) with PostCard (#6) (`#priority/p0`)
+- [x] `TASK-M5-02`: Reply mutation (`createPost`) & ReplyForm component (#7) (`#priority/p0`)
+
 
 
 ---

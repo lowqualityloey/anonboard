@@ -50,6 +50,18 @@ export async function getThreadById(id: string) {
     },
     include: {
       board: true,
+      posts: {
+        where: { isDeleted: false },
+        orderBy: { createdAt: "asc" },
+        select: {
+          id: true,
+          threadId: true,
+          body: true,
+          anonName: true,
+          createdAt: true,
+          isDeleted: true,
+        },
+      },
       _count: {
         select: {
           posts: {
@@ -66,3 +78,10 @@ export const getThreadsByBoardSlugFn = createServerFn({ method: "GET" })
   .handler(async ({ data: slug }) => {
     return getThreadsByBoardSlug(slug);
   });
+
+export const getThreadByIdFn = createServerFn({ method: "GET" })
+  .validator((id: string) => id)
+  .handler(async ({ data: id }) => {
+    return getThreadById(id);
+  });
+

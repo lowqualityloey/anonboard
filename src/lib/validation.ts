@@ -15,3 +15,15 @@ export const createThreadSchema = z.object({
 });
 
 export type CreateThreadInput = z.infer<typeof createThreadSchema>;
+
+export const createPostSchema = z.object({
+  threadId: z.string().min(1, "Thread ID is required"),
+  body: z
+    .string()
+    .trim()
+    .min(2, "Reply must be at least 2 characters")
+    .max(2000, "Reply must be 2000 characters or fewer"),
+});
+
+export type CreatePostInput = z.infer<typeof createPostSchema>;
+

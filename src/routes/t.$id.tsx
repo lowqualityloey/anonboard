@@ -1,9 +1,120 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { getThreadByIdFn } from "~/server/queries/threads";
+import { PostCard } from "~/components/PostCard";
+import { ReplyForm } from "~/components/ReplyForm";
 
 export const Route = createFileRoute("/t/$id")({
-  component: () => (
-    <div className="mx-auto max-w-3xl px-4 py-8 text-center text-text-muted">
-      Thread View (Milestone 5)
+  loader: async ({ params }) => {
+    const thread = await getThreadByIdFn({ data: params.id });
+    if (!thread || thread.isDeleted) {
+      throw notFound();
+    }
+    return { thread };
+  },
+  notFoundComponent: () => (
+    <div className="mx-auto max-w-3xl px-4 py-16 text-center">
+      <h1 className="text-2xl font-bold text-text">Thread Not Found</h1>
+      <p className="mt-2 text-sm text-text-muted">
+        This thread may have been deleted or does not exist.
+      </p>
+      <Link
+        to="/"
+        className="mt-6 inline-flex items-center rounded-md bg-accent px-4 py-2 text-sm font-medium text-bg hover:bg-accent-hover transition-colors duration-fast"
+      >
+        &larr; Return to all boards
+      </Link>
     </div>
   ),
+  component: ThreadDetailPage,
 });
+
+function ThreadDetailPage() {
+  const { thread } = Route.useLoaderData();
+
+  const formattedCreated = new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(new Date(thread.createdAt));
+
+  return (
+    <div className="mx-auto max-w-3xl px-4 py-8">
+      {/* Breadcrumb Navigation */}
+      <nav className="mb-6 flex items-center space-x-2 text-xs text-text-muted">
+        <Link
+          to="/"
+          className="hover:text-text transition-colors duration-fast"
+        >
+          All Boards
+        </Link>
+        <span>/</span>
+        <Link
+          to="/b/$slug"
+          params={{ slug: thread.board.slug }}
+          className="hover:text-text transition-colors duration-fast"
+        >
+          {thread.board.name}
+        </Link>
+        <span>/</span>
+        <span className="truncate max-w-[200px] text-text font-medium">
+          {thread.title}
+        </span>
+      </nav>
+
+      {/* Main Original Post (OP) */}
+      <article className="rounded-lg border border-border bg-surface p-6 shadow-sm mb-8">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-2 border-b border-border pb-3 text-xs text-text-muted">
+          <div className="flex items-center space-x-2">
+            <span className="font-semibold text-accent">{thread.anonName}</span>
+            <span className="rounded bg-accent/15 px-1.5 py-0.5 text-[10px] font-semibold text-accent">
+              OP
+            </span>
+            {thread.isLocked && (
+              <span className="rounded bg-warning/20 px-1.5 py-0.5 text-[10px] font-medium text-warning">
+                Locked
+              </span>
+            )}
+          </div>
+          <time dateTime={new Date(thread.createdAt).toISOString()}>{formattedCreated}</time>
+        </div>
+
+        <h1 className="text-xl font-bold text-text leading-tight mb-4">
+          {thread.title}
+        </h1>
+
+        <p className="whitespace-pre-wrap text-sm text-text leading-relaxed">
+          {thread.body}
+        </p>
+      </article>
+
+      {/* Replies Section */}
+      <section className="mb-8">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-text-muted">
+            Replies ({thread.posts.length})
+          </h2>
+        </div>
+
+        {thread.posts.length === 0 ? (
+          <div className="rounded-lg border border-dashed border-border p-8 text-center text-xs text-text-muted">
+            No replies yet. Be the first to share your thoughts anonymously!
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {thread.posts.map((post, idx) => (
+              <PostCard key={post.id} post={post} index={idx} />
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* Reply Submission Form */}
+      <section>
+        <ReplyForm threadId={thread.id} isLocked={thread.isLocked} />
+      </section>
+    </div>
+  );
+}
