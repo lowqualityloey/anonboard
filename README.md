@@ -1,39 +1,38 @@
 # AnonBoard
 
-A lightweight anonymous discussion board. Users browse boards, create threads, and
-reply without creating an account.
+A high-performance, lightweight anonymous discussion board. Users browse boards, create threads, and participate in discussions without creating an account.
 
-- **Architecture** — see [ARCHITECTURE.md](./ARCHITECTURE.md)
-- **Design tokens** — see [DESIGN.md](./DESIGN.md)
+- **Live Demo**: [https://anonboard-tau.vercel.app](https://anonboard-tau.vercel.app)
+- **Architecture**: See [ARCHITECTURE.md](./ARCHITECTURE.md)
+- **Design Tokens**: See [DESIGN.md](./DESIGN.md)
+- **Deployment Guide**: See [docs/releases/deployment.md](./docs/releases/deployment.md)
 
 ---
 
 ## Features
 
-- Anonymous thread creation and replies
-- Multiple boards (General, Study, Random)
-- Thread list with title, preview, reply count, and last activity
-- Stable anonymous tag per user per thread (e.g. `Anon 7f3a`)
-- Near-real-time replies via polling
-- Admin moderation: soft-delete threads and posts
-- Dark, minimal UI driven by design tokens
+- **Anonymous Discussions**: Create threads and submit replies without registration or email.
+- **Multiple Boards**: Organized by topic (`/b/general`, `/b/study`, `/b/random`).
+- **Deterministic Identity Tags**: Stable, per-thread anonymous identity badges (e.g. `Anon 7f3a`) derived from a secure cookie and thread ID.
+- **Near-Real-Time Updates**: Background polling powered by TanStack Query keeps discussions synchronized.
+- **Admin Moderation (`/admin`)**: Password-protected dashboard with soft-deletions and thread locking/unlocking with instant optimistic UI feedback.
+- **High-Performance Architecture**: SSR via TanStack Start, client-side route preloading, Tailwind CSS v4 `@theme` design tokens, and Sydney edge serverless function routing (`syd1`).
 
 ---
 
 ## Tech Stack
 
-| Layer | Choice |
+| Layer | Technology |
 |---|---|
-| UI | React |
-| Meta-framework | TanStack Start |
-| Router | TanStack Router (file-based, type-safe) |
-| Client cache | TanStack Query |
+| Framework / SSR | [TanStack Start](https://tanstack.com/start) + [Nitro](https://nitro.unjs.io/) |
+| UI Library | React 19 |
+| Routing & Cache | [TanStack Router](https://tanstack.com/router) + [TanStack Query](https://tanstack.com/query) |
 | Language | TypeScript |
 | Styling | Tailwind CSS v4 |
-| ORM | Prisma |
-| Database | Supabase Postgres |
-| Hosting | Vercel |
+| ORM | Prisma ORM |
+| Database | Supabase Postgres (PgBouncer Pooler) |
 | Validation | Zod |
+| Hosting | Vercel (Edge Functions in `syd1`) |
 
 ---
 
@@ -43,198 +42,154 @@ reply without creating an account.
 
 - Node.js 20+
 - npm 10+
-- A Supabase project (free tier is fine)
+- A Supabase project (or any PostgreSQL instance)
 
-### 1. Clone and install
+### 1. Clone & Install
 
 ```bash
-git clone https://github.com/<you>/anonboard.git
+git clone https://github.com/lowqualityloey/anonboard.git
 cd anonboard
 npm install
 ```
 
-### 2. Create a Supabase project
+### 2. Database & Environment Configuration
 
-1. Go to https://supabase.com and create a new project.
-2. Open **Project Settings → Database → Connection string**.
-3. Copy two strings:
-   - **Transaction pooler** (port `6543`) → runtime
-   - **Direct connection** (port `5432`) → migrations
-
-### 3. Configure environment
-
-Create `.env` in the repo root:
+Create a `.env` file in the root directory:
 
 ```env
-# Runtime — pooled connection (port 6543)
-DATABASE_URL="postgresql://postgres.[ref]:[password]@aws-0-[region].pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1"
+# Runtime connection (Supabase Transaction Pooler - IPv4 compatible, port 6543)
+DATABASE_URL="postgresql://postgres.[PROJECT_REF]:[PASSWORD]@aws-0-[REGION].pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1"
 
-# Migrations only — direct connection (port 5432)
-DIRECT_URL="postgresql://postgres.[ref]:[password]@aws-0-[region].pooler.supabase.com:5432/postgres"
+# Migrations & CLI schema push (Supabase Session Pooler - port 5432)
+DIRECT_URL="postgresql://postgres.[PROJECT_REF]:[PASSWORD]@aws-0-[REGION].pooler.supabase.com:5432/postgres"
 
-# Admin
-ADMIN_PASSWORD="change-me"
-SESSION_SECRET="generate-a-long-random-string"
+# Admin Moderation Credentials
+ADMIN_PASSWORD="your-strong-admin-password"
+SESSION_SECRET="your-high-entropy-random-session-secret"
 ```
 
-Generate a session secret:
+> [!TIP]
+> Generate a strong `SESSION_SECRET` with:
+> ```bash
+> openssl rand -base64 32
+> ```
+
+### 3. Initialize Database & Seed Boards
+
+Push the schema and seed the default discussion boards:
 
 ```bash
-openssl rand -base64 32
-```
+# Generate Prisma Client
+npm run db:generate
 
-### 4. Set up the database
+# Push schema to database
+npx prisma db push
 
-```bash
-npx prisma generate
-npx prisma migrate deploy
+# Seed initial boards (/b/general, /b/study, /b/random)
 npm run db:seed
 ```
 
-`db:seed` inserts the default boards (General, Study, Random).
-
-### 5. Run the dev server
+### 4. Run Development Server
 
 ```bash
 npm run dev
 ```
 
-App runs at http://localhost:3000.
+Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## Scripts
+## Available Scripts
 
-| Script | Description |
-|---|---|
-| `npm run dev` | Start the Vite dev server |
-| `npm run build` | Production build |
-| `npm run start` | Run the production build locally |
-| `npm run lint` | Lint with ESLint |
-| `npm run typecheck` | TypeScript check, no emit |
-| `npm run db:generate` | Regenerate Prisma client |
-| `npm run db:migrate` | Create + apply a dev migration |
-| `npm run db:deploy` | Apply migrations (prod / CI) |
-| `npm run db:seed` | Seed default boards |
-| `npm run db:studio` | Open Prisma Studio |
+| Script | Command | Description |
+|---|---|---|
+| `npm run dev` | `vite dev` | Starts local development server on port 3000 |
+| `npm run build` | `prisma generate && vite build` | Builds client and SSR Nitro bundle for production |
+| `npm run preview` | `vite preview` | Previews production build locally |
+| `npm run start` | `node .output/server/index.mjs` | Starts built Nitro Node.js production server |
+| `npm run typecheck` | `tsc --noEmit` | Runs full TypeScript type check |
+| `npm run db:generate` | `prisma generate` | Generates the Prisma Client |
+| `npm run db:migrate` | `prisma migrate dev` | Creates and applies development migrations |
+| `npm run db:deploy` | `prisma migrate deploy` | Applies pending migrations in CI / production |
+| `npm run db:seed` | `prisma db seed` | Seeds default boards (`/b/general`, `/b/study`, `/b/random`) |
 
 ---
 
 ## Project Structure
 
 ```text
-src/
-  routes/                      # File-based routes
-  server/                      # Prisma, auth, queries, server functions
-  components/                  # UI components
-  styles/app.css               # Tailwind + @theme tokens
-  lib/validation.ts            # Zod schemas
-prisma/
-  schema.prisma
-  seed.ts
-ARCHITECTURE.md
-DESIGN.md
-README.md
+anonboard/
+├── prisma/
+│   ├── schema.prisma          # Database models (Board, Thread, Post)
+│   └── seed.ts                # Default boards seed script
+├── src/
+│   ├── components/            # UI components (Header, ReplyForm, ThreadRow)
+│   ├── lib/
+│   │   ├── anon.ts            # Anonymous identity cookie & deterministic hash
+│   │   └── validation.ts      # Zod validation schemas
+│   ├── routes/                # TanStack file-based routes
+│   │   ├── __root.tsx         # HTML shell & QueryClient provider
+│   │   ├── index.tsx          # Board directory & admin link
+│   │   ├── admin.tsx          # Moderation dashboard (soft-delete, lock/unlock)
+│   │   ├── b.$slug.index.tsx  # Board thread listing
+│   │   ├── b.$slug.new.tsx    # Create thread form
+│   │   └── t.$id.tsx          # Thread detail with live polling replies
+│   ├── server/                # Server-only logic & RPCs
+│   │   ├── auth.ts            # HMAC signed admin session cookies
+│   │   ├── db.ts              # Prisma client singleton
+│   │   ├── fns/               # TanStack Start createServerFn handlers
+│   │   └── queries/           # Read queries (boards, threads, posts)
+│   ├── styles/
+│   │   └── app.css            # Tailwind CSS v4 configuration & @theme tokens
+│   └── router.tsx             # TanStack Router configuration & intent preloading
+├── vercel.json                # Vercel serverless function regional routing (syd1)
+├── ARCHITECTURE.md            # System architecture & invariants
+├── DESIGN.md                  # Semantic token palette & typography
+└── README.md                  # Project documentation
 ```
 
-Full breakdown in [ARCHITECTURE.md](./ARCHITECTURE.md).
+---
+
+## Production Deployment (Vercel)
+
+1. Push your repository to GitHub.
+2. Import the repository into [Vercel](https://vercel.com).
+3. Configure Environment Variables in **Project Settings → Environment Variables**:
+   - `DATABASE_URL`: Supabase transaction pooler URL (port `6543`) with `?pgbouncer=true&connection_limit=1`.
+   - `DIRECT_URL`: Supabase session pooler URL (port `5432`).
+   - `ADMIN_PASSWORD`: Your admin panel password.
+   - `SESSION_SECRET`: Secret string for HMAC session cookie signing.
+4. Set Build Settings:
+   - **Framework Preset**: Other / Vite
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `.output/public`
+5. Deploy. Serverless functions will automatically run close to users in Sydney (`syd1`) as defined in [`vercel.json`](./vercel.json).
 
 ---
 
-## Design System
+## Verification & Manual Testing
 
-All colors, spacing, radius, shadow, motion, and z-index are defined as tokens in
-[DESIGN.md](./DESIGN.md) and wired into Tailwind v4 via `@theme` in
-`src/styles/app.css`.
-
-Use **semantic** tokens in components:
-
-```html
-<article class="bg-surface border border-border rounded-lg p-4">
-  <h2 class="text-lg font-semibold text-text">Thread title</h2>
-  <p class="text-sm text-text-muted font-mono">Anon 7f3a · 2h ago</p>
-</article>
-```
-
-Prefer `bg-surface` over `bg-gray-900`. Prefer `text-text-muted` over `text-gray-400`.
-If you reach for the same raw palette value twice, add a token.
-
----
-
-## Deployment (Vercel)
-
-1. Push the repo to GitHub.
-2. Import it in Vercel.
-3. Add environment variables in **Project → Settings → Environment Variables**:
-
-   ```
-   DATABASE_URL      # pooled, port 6543
-   DIRECT_URL        # direct, port 5432
-   ADMIN_PASSWORD
-   SESSION_SECRET
-   ```
-
-4. Set the build command:
-
-   ```
-   prisma generate && prisma migrate deploy && npm run build
-   ```
-
-   Or run `prisma migrate deploy` as a separate CI step to keep builds fast.
-
-5. Deploy.
-
-See [ARCHITECTURE.md § Deployment](./ARCHITECTURE.md) for notes on pooling,
-serverless, and Supabase free-tier behavior.
-
----
-
-## Testing the App
-
-Manual smoke test after first run:
-
-1. Open `/` — you should see seeded boards.
-2. Open a board → click **New Thread** → submit.
-3. You should land on `/t/<id>` with your thread and an `Anon xxxx` tag.
-4. Reply to your own thread — same `Anon xxxx` tag appears.
-5. Open the same thread in a private window and reply — different tag.
-6. Visit `/admin`, log in, delete a post, confirm it disappears.
-
----
-
-## Roadmap
-
-- [x] Boards, threads, replies
-- [x] Anonymous tags
-- [x] Admin soft-delete
-- [x] Polling
-- [ ] Rate limiting (Upstash Redis)
-- [ ] Report button + moderation queue
-- [ ] Markdown replies with `rehype-sanitize`
-- [ ] Image uploads (Supabase Storage)
-- [ ] Full-text search (Postgres FTS)
-- [ ] Optional: SSE for real-time updates
+1. **Board Directory (`/`)**: Verify boards are listed with their respective thread and post counts.
+2. **Create Thread (`/b/general/new`)**: Submit a thread. The form shows an instant loading spinner and redirects to `/t/:id`.
+3. **Deterministic Anonymous Tag**: Your post displays an `Anon [hash]` badge. Replies from the same browser maintain the same badge in that thread.
+4. **Live Polling**: Open the thread in a second window or private tab, reply, and watch the original window update automatically within 12 seconds.
+5. **Admin Moderation (`/admin`)**: Log in with `ADMIN_PASSWORD` to lock threads or soft-delete abusive threads and posts with instant feedback.
 
 ---
 
 ## Troubleshooting
 
-**`Error: P1001: Can't reach database server`**
-Check that `DATABASE_URL` uses the pooler host and port `6543`, and that the
-Supabase project isn't paused.
-
-**`prepared statement "s0" already exists`**
-You're hitting the pooler without `?pgbouncer=true`. Add it to `DATABASE_URL`.
-
-**`Too many connections`**
-Missing `&connection_limit=1` on the pooled URL, or not using the Prisma singleton.
-
-**Migrations hang or time out**
-Use the direct URL (`DIRECT_URL`) for migrations — the pooler doesn't support
-all DDL operations.
+- **`Error: P1001: Can't reach database server`**:
+  - The direct Supabase hostname (`db.[ref].supabase.co`) requires IPv6. If your network or environment is IPv4-only, use the Supabase Pooler host: `aws-0-[region].pooler.supabase.com`.
+- **`prepared statement "s0" already exists`**:
+  - Add `?pgbouncer=true` to your pooled `DATABASE_URL`.
+- **`Max client connections reached`**:
+  - Add `&connection_limit=1` to the query string in `DATABASE_URL` to limit per-serverless-function connections on Prisma.
+- **Missing `/b/[slug]/new` route**:
+  - Ensure the board index route is named `b.$slug.index.tsx` so `b.$slug.new.tsx` is recognized as a sibling leaf route.
 
 ---
 
 ## License
 
-MIT.
+MIT
