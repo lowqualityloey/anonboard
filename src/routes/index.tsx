@@ -1,10 +1,32 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { getBoardsFn } from "~/server/queries/boards";
+import { BoardCardSkeleton } from "~/components/Skeletons";
 
 export const Route = createFileRoute("/")({
   loader: async () => {
     return getBoardsFn();
   },
+  pendingComponent: () => (
+    <div className="mx-auto max-w-4xl px-4 py-8">
+      <header className="mb-8 flex flex-col gap-4 border-b border-border pb-6 sm:flex-row sm:items-center sm:justify-between animate-pulse">
+        <div>
+          <div className="h-8 w-40 rounded bg-border" />
+          <div className="mt-2 h-4 w-72 rounded bg-border/60" />
+        </div>
+      </header>
+      <section>
+        <div className="mb-4 flex items-center justify-between animate-pulse">
+          <div className="h-4 w-20 rounded bg-border/60" />
+          <div className="h-4 w-16 rounded bg-border/40" />
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {[1, 2, 3].map((i) => (
+            <BoardCardSkeleton key={i} />
+          ))}
+        </div>
+      </section>
+    </div>
+  ),
   component: HomePage,
 });
 
@@ -54,7 +76,7 @@ function HomePage() {
                 key={board.id}
                 to="/b/$slug"
                 params={{ slug: board.slug }}
-                className="group flex flex-col justify-between rounded-lg border border-border bg-surface p-5 transition-all duration-base hover:border-border-hover hover:-translate-y-1 hover:shadow-md active:translate-y-0 active:scale-[0.98]"
+                className="group flex flex-col justify-between rounded-lg border border-border bg-surface p-5 transition-colors duration-fast hover:border-border-hover hover:bg-surface/80"
               >
                 <div>
                   <div className="flex items-center justify-between">

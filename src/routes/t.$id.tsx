@@ -4,6 +4,7 @@ import { getThreadByIdFn } from "~/server/queries/threads";
 import { pollThreadFn } from "~/server/fns/pollThread";
 import { PostCard } from "~/components/PostCard";
 import { ReplyForm } from "~/components/ReplyForm";
+import { ThreadDetailSkeleton } from "~/components/Skeletons";
 
 export const Route = createFileRoute("/t/$id")({
   loader: async ({ params }) => {
@@ -13,6 +14,7 @@ export const Route = createFileRoute("/t/$id")({
     }
     return { thread };
   },
+  pendingComponent: ThreadDetailSkeleton,
   notFoundComponent: () => (
     <div className="mx-auto max-w-3xl px-4 py-16 text-center">
       <h1 className="text-2xl font-bold text-text">Thread Not Found</h1>

@@ -42,7 +42,7 @@ function formatRelativeTime(dateInput: Date | string): string {
 
 export function ThreadRow({ thread }: ThreadRowProps) {
   return (
-    <article className="group rounded-lg border border-border bg-surface p-4 transition-all duration-base hover:border-border-hover hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 active:scale-[0.995]">
+    <article className="group rounded-lg border border-border bg-surface p-4 transition-colors duration-fast hover:border-border-hover hover:bg-surface/90">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex-1">
           <Link

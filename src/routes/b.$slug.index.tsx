@@ -1,9 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ThreadRow } from "~/components/ThreadRow";
 import { getThreadsByBoardSlugFn } from "~/server/queries/threads";
+import { ThreadRowSkeleton } from "~/components/Skeletons";
 
 export const Route = createFileRoute("/b/$slug/")({
-
   loader: async ({ params }) => {
     const data = await getThreadsByBoardSlugFn({ data: params.slug });
     if (!data || !data.board) {
@@ -11,6 +11,31 @@ export const Route = createFileRoute("/b/$slug/")({
     }
     return data;
   },
+  pendingComponent: () => (
+    <div className="mx-auto max-w-4xl px-4 py-8">
+      <nav className="mb-6">
+        <div className="h-3 w-20 rounded bg-border/60 animate-pulse" />
+      </nav>
+      <header className="mb-8 flex flex-col gap-4 border-b border-border pb-6 sm:flex-row sm:items-center sm:justify-between animate-pulse">
+        <div>
+          <div className="h-8 w-36 rounded bg-border" />
+          <div className="mt-2 h-4 w-60 rounded bg-border/60" />
+        </div>
+        <div className="h-9 w-28 rounded bg-border/80" />
+      </header>
+      <section>
+        <div className="mb-4 flex items-center justify-between animate-pulse">
+          <div className="h-4 w-16 rounded bg-border/60" />
+          <div className="h-4 w-12 rounded bg-border/40" />
+        </div>
+        <div className="space-y-3">
+          {[1, 2, 3, 4].map((i) => (
+            <ThreadRowSkeleton key={i} />
+          ))}
+        </div>
+      </section>
+    </div>
+  ),
   notFoundComponent: () => {
     return (
       <div className="mx-auto max-w-3xl px-4 py-16 text-center">
