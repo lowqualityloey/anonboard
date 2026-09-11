@@ -2,7 +2,8 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ThreadRow } from "~/components/ThreadRow";
 import { getThreadsByBoardSlugFn } from "~/server/queries/threads";
 
-export const Route = createFileRoute("/b/$slug")({
+export const Route = createFileRoute("/b/$slug/")({
+
   loader: async ({ params }) => {
     const data = await getThreadsByBoardSlugFn({ data: params.slug });
     if (!data || !data.board) {

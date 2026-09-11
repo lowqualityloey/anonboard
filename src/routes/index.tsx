@@ -13,14 +13,25 @@ function HomePage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
-      <header className="mb-8 border-b border-border pb-6">
-        <h1 className="text-3xl font-bold tracking-tight text-text">
-          AnonBoard
-        </h1>
-        <p className="mt-2 text-sm text-text-muted">
-          Anonymous, lightweight discussion boards. Select a board below to browse threads or start a conversation.
-        </p>
+      <header className="mb-8 flex flex-col gap-4 border-b border-border pb-6 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-text">
+            AnonBoard
+          </h1>
+          <p className="mt-2 text-sm text-text-muted">
+            Anonymous, lightweight discussion boards. Select a board below to browse threads or start a conversation.
+          </p>
+        </div>
+        <div>
+          <Link
+            to="/admin"
+            className="inline-flex items-center rounded-md border border-border bg-surface px-3 py-1.5 text-xs font-medium text-text-muted hover:border-border-hover hover:text-text transition-colors duration-fast"
+          >
+            Admin Moderation &rarr;
+          </Link>
+        </div>
       </header>
+
 
       <section>
         <div className="mb-4 flex items-center justify-between">
